@@ -38,6 +38,6 @@ public class HistoricalRatesCommand extends OperationCommand{
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);
         sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
-            "Введите основную валюту, валюту конвертации дату курса.");
+            "Введите конвертируемую валюту, основную валюту и дату курса.");
     }
 }

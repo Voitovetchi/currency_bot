@@ -1,12 +1,8 @@
 import commands.NonCommand;
-import commands.operation.HistoricalRatesCommand;
-import commands.operation.OperationCommand;
-import commands.operation.RatesCommand;
-import commands.operation.RatesForecastCommand;
+import commands.operation.*;
 import commands.service.HelpCommand;
 import commands.service.StartCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
-import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -31,14 +27,15 @@ public class Bot extends TelegramLongPollingCommandBot {
         register(new StartCommand("start", "Старт"));
         register(new HelpCommand("help", "Помощь"));
 
-        RatesCommand ratesCommand = new RatesCommand("rates", "Курс");
+        RatesCommand ratesCommand = new RatesCommand("rates", "Курс валют");
         register(ratesCommand);
-        HistoricalRatesCommand historicalRatesCommand = new HistoricalRatesCommand("historicalrates", "Курс за прошедшие дни");
+        HistoricalRatesCommand historicalRatesCommand = new HistoricalRatesCommand("historicalrates", "Курс валют в предыдущие дни");
         register(historicalRatesCommand);
-        RatesForecastCommand forecastCommand = new RatesForecastCommand("forecast", "Прогноз курса");
+        RatesForecastCommand forecastCommand = new RatesForecastCommand("forecast", "Прогноз курса валют");
         register(forecastCommand);
-//        register(new RatesConversionCommand("conversion", "Конверсия валют"));
-        operationCommands.addAll(Arrays.asList(ratesCommand, historicalRatesCommand, forecastCommand));
+        RatesConversionCommand conversionCommand = new RatesConversionCommand("conversion", "Конверсия валют");
+        register(conversionCommand);
+        operationCommands.addAll(Arrays.asList(ratesCommand, historicalRatesCommand, forecastCommand, conversionCommand));
     }
 
     @Override

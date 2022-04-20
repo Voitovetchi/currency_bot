@@ -6,42 +6,37 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import service.CurrentRatesService;
 import service.Service;
-import utils.RateExtractionUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static utils.RateExtractionUtils.getRate;
 
-
-public class RatesCommand extends OperationCommand{
-
-    public RatesCommand(String identifier, String description) {
+public class RatesConversionCommand extends OperationCommand{
+    public RatesConversionCommand(String identifier, String description) {
         super(identifier, description);
     }
 
     @Override
-    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        setActive(true);
-        sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
-            "Введите конвертируемую валюту и основную валюту.");
-    }
-
-    @Override
     public String continueAction(String message) throws URISyntaxException, IOException, InterruptedException {
-        String[] currencies = message.split(",");
+        String[] values = message.split(",");
         CurrentRate currentRate = new CurrentRate();
-        currentRate.setBaseCurrency(currencies[0]);
-        currentRate.setConvertedCurrency(currencies[1]);
+        currentRate.setBaseCurrency(values[0]);
+        currentRate.setConvertedCurrency(values[1]);
 
         Service currentRatesService = new CurrentRatesService();
         String responseBody = currentRatesService.sendRequest(currentRate);
 
         double rate = getRate(currentRate, responseBody);
-        setActive(false);
 
-        return "Курс " + rate;
+        setActive(false);
+        return Double.toString(rate * Double.parseDouble(values[2]));
     }
 
-
+    @Override
+    public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
+        setActive(true);
+        sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
+            "Введите конвертируемую валюту, основную валюту и количество конвертируемой валюты.");
+    }
 }

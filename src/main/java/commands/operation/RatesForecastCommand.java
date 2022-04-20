@@ -53,6 +53,6 @@ public class RatesForecastCommand extends OperationCommand{
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);
         sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
-            "Введите основную валюту и валюту конвертации.");
+            "Введите конвертируемую валюту и основную валюту.");
     }
 }
