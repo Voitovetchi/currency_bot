@@ -12,6 +12,11 @@ public class HelpCommand extends ServiceCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), user.getUserName(),
-            "Доступные команды");
+            """
+                Доступные команды:
+                1. Предоставление курса валют - /rates.
+                2. Предоставление курса валют за предыдущие дни - /historicalrates.
+                3. Прогноз курса валют - /forecast.
+                4. Конверсия валют - /conversion.""");
     }
 }

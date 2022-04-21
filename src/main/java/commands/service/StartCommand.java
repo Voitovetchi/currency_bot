@@ -13,6 +13,14 @@ public class StartCommand extends ServiceCommand{
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), user.getUserName(),
-            "Давайте начнём! Если Вам нужна помощь, нажмите /help");
+            """
+                Здравствуйте. Давайте начнём!
+                Данный бот предоставляет такие возможности как:
+                1. Предоставление курса валют - /rates.
+                2. Предоставление курса валют за предыдущие дни - /historicalrates.
+                3. Прогноз курса валют - /forecast.
+                4. Конверсия валют - /conversion.
+                Если Вам нужна помощь, нажмите /help.
+                Чтобы еще раз получить это сообщение нажмите /start.""");
     }
 }

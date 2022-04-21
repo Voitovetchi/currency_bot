@@ -7,9 +7,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 @Getter
 @Setter
 public abstract class OperationCommand extends BotCommand {
@@ -31,7 +28,7 @@ public abstract class OperationCommand extends BotCommand {
         }
     }
 
-    public abstract String continueAction(String message) throws URISyntaxException, IOException, InterruptedException;
+    public abstract String continueAction(String message) throws Exception;
 
     private void sendError(AbsSender absSender, Long chatId, String commandName, String userName) {
         try {

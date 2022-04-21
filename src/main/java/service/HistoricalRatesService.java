@@ -9,9 +9,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class HistoricalRatesService implements Service{
-    @Override
-    public String sendRequest(Rater rate) throws URISyntaxException, IOException, InterruptedException {
+public class HistoricalRatesService {
+    public static String sendRequest(Rater rate) throws URISyntaxException, IOException, InterruptedException {
         String uri = "http://api.exchangeratesapi.io/v1/" + rate.getDate() + "?access_key=4790cd5b2441fea218127c5eb063b542";
 
         HttpRequest request = HttpRequest.newBuilder()

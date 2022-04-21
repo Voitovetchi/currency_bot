@@ -29,12 +29,16 @@ public class Bot extends TelegramLongPollingCommandBot {
 
         RatesCommand ratesCommand = new RatesCommand("rates", "Курс валют");
         register(ratesCommand);
+
         HistoricalRatesCommand historicalRatesCommand = new HistoricalRatesCommand("historicalrates", "Курс валют в предыдущие дни");
         register(historicalRatesCommand);
+
         RatesForecastCommand forecastCommand = new RatesForecastCommand("forecast", "Прогноз курса валют");
         register(forecastCommand);
+
         RatesConversionCommand conversionCommand = new RatesConversionCommand("conversion", "Конверсия валют");
         register(conversionCommand);
+
         operationCommands.addAll(Arrays.asList(ratesCommand, historicalRatesCommand, forecastCommand, conversionCommand));
     }
 
@@ -74,8 +78,8 @@ public class Bot extends TelegramLongPollingCommandBot {
         answer.setChatId(chatId.toString());
         try {
             execute(answer);
-        } catch (TelegramApiException e) {
-            //логируем сбой Telegram Bot API, используя userName
+        } catch (TelegramApiException ignored) {
+
         }
     }
 
