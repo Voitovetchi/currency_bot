@@ -53,7 +53,7 @@ public class RatesForecastCommand extends OperationCommand{
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);
-        sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
+        sendAnswer(absSender, chat.getId(), user.getUserName(),
             """
                 Введите конвертируемую валюту и основную валюту. Данные должны вводиться через запятую.
                 Например, если необходимо получить курс евро относительно доллара, сообщение должно выглядеть следующим образом

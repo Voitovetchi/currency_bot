@@ -35,7 +35,7 @@ public class HistoricalRatesCommand extends OperationCommand{
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);
-        sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
+        sendAnswer(absSender, chat.getId(), user.getUserName(),
             """
                 Введите конвертируемую валюту, основную валюту и дату курса. Данные должны вводиться через запятую, дата должна соответсвовать формату yyyy-MM-dd
                 Например, если необходимо получить курс евро относительно доллара на 2012-12-12, сообщение должно выглядеть следующим образом

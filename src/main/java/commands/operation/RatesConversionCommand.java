@@ -32,7 +32,7 @@ public class RatesConversionCommand extends OperationCommand{
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);
-        sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
+        sendAnswer(absSender, chat.getId(), user.getUserName(),
             """
                 Введите конвертируемую валюту, основную валюту и количество конвертируемой валюты. Данные должны вводиться через запятую.
                 Например, если необходимо конвертировать 10 евро в доллар, сообщение должно выглядеть следующим образом

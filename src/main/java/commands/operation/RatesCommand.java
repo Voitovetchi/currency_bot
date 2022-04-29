@@ -19,7 +19,7 @@ public class RatesCommand extends OperationCommand{
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         setActive(true);
-        sendAnswer(absSender, chat.getId(), "", "", user.getUserName(),
+        sendAnswer(absSender, chat.getId(), user.getUserName(),
             """
                 Введите конвертируемую валюту и основную валюту. Данные должны вводиться через запятую.
                 Например, если необходимо получить курс евро относительно доллара, сообщение должно выглядеть следующим образом
@@ -40,6 +40,4 @@ public class RatesCommand extends OperationCommand{
 
         return "Курс " + currentRate.getBaseCurrency() + " к " + currentRate.getConvertedCurrency() + " равен " + rate;
     }
-
-
 }

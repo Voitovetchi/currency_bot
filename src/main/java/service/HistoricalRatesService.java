@@ -1,6 +1,7 @@
 package service;
 
 import dto.Rater;
+import exceptions.BadResponseException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,6 +20,10 @@ public class HistoricalRatesService {
             .GET()
             .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        if (response.statusCode() == 200) {
+            return response.body();
+        } else {
+            throw new BadResponseException("Request went with an error");
+        }
     }
 }

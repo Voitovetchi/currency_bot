@@ -16,7 +16,7 @@ public abstract class OperationCommand extends BotCommand {
         super(identifier, description);
     }
 
-    void sendAnswer(AbsSender absSender, Long chatId, String description, String commandName, String userName, String text) {
+    void sendAnswer(AbsSender absSender, Long chatId, String userName, String text) {
         SendMessage message = new SendMessage();
         message.enableMarkdown(true);
         message.setChatId(chatId.toString());
