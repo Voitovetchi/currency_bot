@@ -1,10 +1,12 @@
 package commands.operation;
 
 import dto.CurrentRate;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import serv.RatesLogic;
 import service.CurrentRatesService;
 
 import static utils.RateExtractionUtils.getRate;
@@ -17,18 +19,16 @@ public class RatesConversionCommand extends OperationCommand{
     @Override
     public String continueAction(String message) throws Exception {
         String[] values = StringUtils.deleteWhitespace(message).toUpperCase().split(",");
-        CurrentRate currentRate = new CurrentRate();
-        currentRate.setBaseCurrency(values[0]);
-        currentRate.setConvertedCurrency(values[1]);
+        CurrentRate currentRate = RatesLogic.runProcess(message);
 
         String responseBody = CurrentRatesService.sendRequest(currentRate);
-
         double rate = getRate(currentRate, responseBody);
 
         setActive(false);
         return values[2] + " " + currentRate.getBaseCurrency() + " = " + rate * Double.parseDouble(values[2]) + " " + currentRate.getConvertedCurrency();
     }
 
+    @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);

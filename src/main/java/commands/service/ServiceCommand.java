@@ -10,15 +10,16 @@ abstract class ServiceCommand extends BotCommand {
         super(commandIdentifier, description);
     }
 
-    void sendAnswer(AbsSender absSender, Long chatId, String commandName, String userName, String text) {
+    void sendAnswer(AbsSender absSender, Long chatId, String userName, String text)
+        throws TelegramApiException {
         SendMessage message = new SendMessage();
         message.enableMarkdown(true);
         message.setChatId(chatId.toString());
         message.setText(text);
-        try {
-            absSender.execute(message);
-        } catch (TelegramApiException e) {
-            //логируем сбой Telegram Bot API, используя commandName и userName
-        }
+        absSender.execute(message);
     }
 }
+
+
+
+

@@ -8,7 +8,9 @@ public class UserMessageValidationUtils {
 
     public static boolean dateIsValid(String date) {
         try {
-            LocalDate.parse(date, new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd").toFormatter());
+            LocalDate.parse(date, new DateTimeFormatterBuilder()
+                .appendPattern("yyyy-MM-dd")
+                .toFormatter());
         } catch (DateTimeParseException e) {
             return false;
         }

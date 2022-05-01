@@ -2,6 +2,7 @@ import commands.NonCommand;
 import commands.operation.*;
 import commands.service.HelpCommand;
 import commands.service.StartCommand;
+import lombok.SneakyThrows;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -30,23 +31,25 @@ public class Bot extends TelegramLongPollingCommandBot {
         RatesCommand ratesCommand = new RatesCommand("rates", "Курс валют");
         register(ratesCommand);
 
-        HistoricalRatesCommand historicalRatesCommand = new HistoricalRatesCommand("historicalrates", "Курс валют в предыдущие дни");
+        HistoricalRatesCommand historicalRatesCommand =
+            new HistoricalRatesCommand("historicalrates", "Курс валют в предыдущие дни");
         register(historicalRatesCommand);
 
-        RatesForecastCommand forecastCommand = new RatesForecastCommand("forecast", "Прогноз курса валют");
+        RatesForecastCommand forecastCommand =
+            new RatesForecastCommand("forecast", "Прогноз курса валют");
         register(forecastCommand);
 
-        RatesConversionCommand conversionCommand = new RatesConversionCommand("conversion", "Конверсия валют");
+        RatesConversionCommand conversionCommand =
+            new RatesConversionCommand("conversion", "Конверсия валют");
         register(conversionCommand);
 
-        operationCommands.addAll(Arrays.asList(ratesCommand, historicalRatesCommand, forecastCommand, conversionCommand));
+        operationCommands.addAll(Arrays.asList(ratesCommand,
+            historicalRatesCommand,
+            forecastCommand,
+            conversionCommand));
     }
 
-    @Override
-    public String getBotUsername() {
-        return BOT_NAME;
-    }
-
+    @SneakyThrows
     @Override
     public void processNonCommandUpdate(Update update) {
         Message msg = update.getMessage();
@@ -63,7 +66,7 @@ public class Bot extends TelegramLongPollingCommandBot {
             answer = e.getMessage();
         }
 
-        setAnswer(chatId, userName, answer);
+        setAnswer(chatId, answer);
     }
 
     private String getUserName(Message msg) {
@@ -72,19 +75,20 @@ public class Bot extends TelegramLongPollingCommandBot {
         return (userName != null) ? userName : String.format("%s %s", user.getLastName(), user.getFirstName());
     }
 
-    private void setAnswer(Long chatId, String userName, String text) {
+    private void setAnswer(Long chatId, String text) throws TelegramApiException {
         SendMessage answer = new SendMessage();
         answer.setText(text);
         answer.setChatId(chatId.toString());
-        try {
-            execute(answer);
-        } catch (TelegramApiException ignored) {
-
-        }
+        execute(answer);
     }
 
     @Override
     public String getBotToken() {
         return BOT_TOKEN;
+    }
+
+    @Override
+    public String getBotUsername() {
+        return BOT_NAME;
     }
 }

@@ -1,5 +1,6 @@
 package commands.service;
 
+import lombok.SneakyThrows;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
@@ -9,9 +10,10 @@ public class HelpCommand extends ServiceCommand {
         super(commandIdentifier, description);
     }
 
+    @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), user.getUserName(),
+        sendAnswer(absSender, chat.getId(), user.getUserName(),
             """
                 Доступные команды:
                 1. Предоставление курса валют - /rates.

@@ -2,10 +2,12 @@ package commands.operation;
 
 import business.RateForecast;
 import dto.HistoricalRate;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import serv.HistoricalRatesLogic;
 import service.HistoricalRatesService;
 
 import java.time.LocalDate;
@@ -20,11 +22,7 @@ public class RatesForecastCommand extends OperationCommand{
 
     @Override
     public String continueAction(String message) throws Exception {
-        String[] currencies = StringUtils.deleteWhitespace(message).toUpperCase().split(",");
-        HistoricalRate historicalRate = new HistoricalRate();
-        historicalRate.setBaseCurrency(currencies[0]);
-        historicalRate.setConvertedCurrency(currencies[1]);
-        historicalRate.setDate(LocalDate.now().toString());
+        HistoricalRate historicalRate = HistoricalRatesLogic.runProcess(message);
 
         RateForecast rateForecast = new RateForecast();
         for (int i = 0; i < 5; i++) {
@@ -50,6 +48,7 @@ public class RatesForecastCommand extends OperationCommand{
         return responseMessage.toString();
     }
 
+    @SneakyThrows
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         setActive(true);

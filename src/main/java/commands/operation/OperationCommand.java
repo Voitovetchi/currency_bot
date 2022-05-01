@@ -16,26 +16,15 @@ public abstract class OperationCommand extends BotCommand {
         super(identifier, description);
     }
 
-    void sendAnswer(AbsSender absSender, Long chatId, String userName, String text) {
+    void sendAnswer(AbsSender absSender, Long chatId, String userName, String text)
+        throws TelegramApiException {
         SendMessage message = new SendMessage();
         message.enableMarkdown(true);
         message.setChatId(chatId.toString());
         message.setText(text);
-        try {
-            absSender.execute(message);
-        } catch (TelegramApiException e) {
-            //логируем сбой Telegram Bot API, используя commandName и userName
-        }
+        absSender.execute(message);
     }
 
     public abstract String continueAction(String message) throws Exception;
-
-    private void sendError(AbsSender absSender, Long chatId, String commandName, String userName) {
-        try {
-            absSender.execute(new SendMessage(chatId.toString(), "Похоже, я сломался. Попробуйте позже"));
-        } catch (TelegramApiException e) {
-            //логируем сбой Telegram Bot API, используя commandName и userName
-        }
-    }
 
 }
